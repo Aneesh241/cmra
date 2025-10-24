@@ -1,0 +1,138 @@
+/* 🐉 CMRA Dragon/Fire Theme (clean, valid CSS) */
+:root {
+  --bg: #0a0a0a;
+  --bg-2: #1a0a0a;
+  --panel: #2a1510;
+  --border: #442200;
+  --accent: #ff6600;
+  --accent-2: #ffaa44;
+  --text: #e6d5c3;
+  --muted: #ffcc99;
+}
+
+* { box-sizing: border-box; }
+html { font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, sans-serif; line-height: 1.6; }
+body {
+  margin: 0;
+  color: var(--text);
+  background: linear-gradient(135deg, var(--bg) 0%, var(--bg-2) 50%, var(--bg) 100%);
+  min-height: 100vh;
+}
+
+/* Header - Dragon's Crown */
+header {
+  background: linear-gradient(180deg, #1a0000 0%, #2a0000 100%);
+  border-bottom: 1px solid #5a1a00;
+  padding: 1.25rem 1rem;
+  box-shadow: 0 2px 8px rgba(255, 68, 0, 0.15);
+}
+header h1 {
+  margin: 0 0 0.25rem;
+  font-size: 2rem;
+  background: linear-gradient(90deg, #ff7a1a, #ffb347);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-shadow: 0 0 6px rgba(255, 120, 40, 0.25);
+}
+.tagline { margin: 0.5rem 0; color: var(--muted); font-style: italic; font-size: 1.1rem; }
+.github-link { margin: 1rem 0 0.5rem; }
+.github-link a {
+  color: var(--accent-2);
+  text-decoration: none;
+  font-weight: 600;
+  padding: 0.4rem 0.8rem;
+  border: 1px solid var(--accent);
+  border-radius: 6px;
+  background: rgba(255, 68, 0, 0.08);
+  transition: background 0.2s ease, border-color 0.2s ease;
+  display: inline-block;
+}
+.github-link a:hover { background: rgba(255, 68, 0, 0.18); border-color: #ff7a1a; }
+
+/* Navigation - Dragon's Path */
+nav { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1rem; }
+nav a {
+  color: #ffcc88;
+  text-decoration: none;
+  padding: 0.45rem 0.75rem;
+  border: 1px solid #553000;
+  border-radius: 6px;
+  background: #2b1205;
+  transition: background 0.2s ease, border-color 0.2s ease;
+  font-weight: 500;
+}
+nav a:hover { background: #331607; border-color: #ff7a1a; }
+
+/* Main Content */
+main { max-width: 1000px; margin: 1.5rem auto; padding: 0 1rem; }
+
+/* Sections - Fire Chambers */
+section {
+  margin: 1.5rem 0;
+  padding: 1.25rem;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: linear-gradient(135deg, #15100e 0%, var(--panel) 100%);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
+}
+section.hero {
+  background: linear-gradient(135deg, #2a0000 0%, #401400 100%);
+  border-color: #ff5a14;
+  box-shadow: 0 3px 12px rgba(255, 68, 0, 0.22);
+}
+
+h2 { margin: 0 0 1rem; font-size: 1.6rem; color: var(--accent-2); text-shadow: 0 0 4px rgba(255, 170, 68, 0.25); }
+h3 { margin: 1rem 0 0.75rem; font-size: 1.25rem; color: #ff8844; }
+h4 { margin: 0.75rem 0 0.5rem; font-size: 1.1rem; color: #ffaa77; }
+p, li { color: var(--text); margin-bottom: 0.8rem; }
+p.note, p.equivalence { background: rgba(255, 102, 0, 0.08); border-left: 4px solid var(--accent); padding: 0.8rem 1rem; margin: 1rem 0; border-radius: 4px; }
+strong { color: #ffcc88; }
+em { color: #ffbb88; }
+
+/* Dragon Cards */
+.dragon-card { background: #22150e; border: 1px solid #4a2a12; border-radius: 8px; padding: 1rem; margin: 1rem 0; box-shadow: none; }
+
+/* Wisdom Cards */
+.wisdom-card { background: #2b1607; border-left: 4px solid var(--accent); border-radius: 6px; padding: 0.9rem 1rem; margin: 0.9rem 0; box-shadow: none; }
+.wisdom-card h3 { margin-top: 0; font-size: 1.3rem; }
+
+/* Warning Box */
+.warning { background: linear-gradient(135deg, #4d1a00 0%, #661f00 100%); border: 2px solid #ff4400; border-radius: 10px; padding: 1.5rem; margin: 1.5rem 0; box-shadow: 0 0 15px rgba(255, 68, 0, 0.2); }
+.warning strong { color: var(--accent-2); }
+
+/* Code Styling - Ancient Runes */
+code, pre { font-family: Consolas, Monaco, "Courier New", monospace; font-size: 0.95em; }
+code { background: rgba(102, 51, 0, 0.25); color: #ffcc88; padding: 0.15rem 0.4rem; border-radius: 4px; border: 1px solid #5a2a00; }
+pre { background: #130b08; border: 1px solid var(--border); border-radius: 6px; padding: 0.9rem; overflow-x: auto; margin: 0.8rem 0; box-shadow: none; }
+pre code { background: none; border: none; padding: 0; color: #ffdd99; font-size: 0.9rem; }
+
+/* Tables - Dragon's Ledger */
+table { width: 100%; border-collapse: collapse; margin: 1rem 0; background: #1a100c; border-radius: 6px; overflow: hidden; box-shadow: none; }
+th, td { border: 1px solid var(--border); padding: 0.7rem 0.9rem; text-align: left; }
+th { background: #2a1308; color: var(--accent-2); font-weight: 600; text-transform: uppercase; font-size: 0.85rem; letter-spacing: 0.3px; }
+tr:nth-child(even) { background: rgba(255, 102, 0, 0.02); }
+tr:hover { background: rgba(255, 102, 0, 0.06); }
+
+/* Lists */
+ul, ol { margin: 1rem 0 1rem 1.5rem; }
+li { margin-bottom: 0.6rem; }
+ul ul { margin-top: 0.5rem; }
+
+/* Links */
+a { color: var(--accent-2); text-decoration: underline; transition: color 0.2s ease; }
+a:hover { color: #ffcc66; text-shadow: 0 0 8px rgba(255, 170, 68, 0.4); }
+
+/* Footer - Dragon's Seal */
+footer { padding: 1.25rem 1rem; border-top: 1px solid #5a1a00; text-align: center; color: var(--muted); background: #0f0503; margin-top: 2rem; box-shadow: none; }
+footer a { color: var(--accent-2); text-decoration: none; font-weight: 500; }
+footer a:hover { color: #ffcc66; }
+
+/* Responsive */
+@media (max-width: 768px) {
+  header h1 { font-size: 2rem; }
+  h2 { font-size: 1.6rem; }
+  section { padding: 1.5rem; }
+  nav { gap: 0.5rem; }
+  nav a { padding: 0.5rem 0.8rem; font-size: 0.9rem; }
+}
