@@ -1,0 +1,76 @@
+murmur === FizzBuzz Game in CMRA ===
+murmur Classic FizzBuzz: prints numbers 1-20
+murmur "Fizz" for multiples of 3, "Buzz" for 5, "FizzBuzz" for both
+
+roar "=== FizzBuzz Game ==="
+roar ""
+
+n bind 1
+flag bind 1
+c3 bind 0
+c5 bind 0
+
+sniff n <= 20 : sniff flag == 0 : dive
+flag bind 0
+    murmur Increment counters for 3 and 5
+    sniff flag == 0 : c3 bind c3 + 1
+    sniff flag == 0 : c5 bind c5 + 1
+
+    murmur Determine outputs
+    sniff flag == 0 : fizz bind 0
+    sniff flag == 0 : buzz bind 0
+    sniff flag == 0 : sniff c3 == 3 : fizz bind 1
+    sniff flag == 0 : sniff c5 == 5 : buzz bind 1
+
+    murmur Print according to fizz/buzz
+    sniff flag == 0 : sniff fizz == 1 : sniff buzz == 1 : roar "FizzBuzz"
+    sniff flag == 0 : sniff fizz == 1 : sniff buzz == 0 : roar "Fizz"
+    sniff flag == 0 : sniff fizz == 0 : sniff buzz == 1 : roar "Buzz"
+    sniff flag == 0 : sniff fizz == 0 : sniff buzz == 0 : roar n
+
+    murmur Reset counters when they hit their thresholds
+    sniff flag == 0 : sniff fizz == 1 : c3 bind 0
+    sniff flag == 0 : sniff buzz == 1 : c5 bind 0
+
+    murmur Next number
+    sniff flag == 0 : n bind n + 1
+flag bind 1
+sniff n <= 20 : sniff flag == 1 : soar
+
+roar ""
+roar "=== Game Complete! ==="
+roar ""
+roar "=== FizzBuzz (Block Loop) ==="
+roar ""
+
+murmur Re-run 1..20 using block-style loop
+n2 bind 1
+c3 bind 0
+c5 bind 0
+flag bind 0
+
+sniff n2 <= 20 :
+{
+    sniff flag == 1 : dive
+    sniff n2 <= 20 : flag bind 1
+
+    sniff flag == 1 : c3 bind c3 + 1
+    sniff flag == 1 : c5 bind c5 + 1
+
+    fizz bind 0
+    buzz bind 0
+    sniff flag == 1 : sniff c3 == 3 : fizz bind 1
+    sniff flag == 1 : sniff c5 == 5 : buzz bind 1
+
+    sniff flag == 1 : sniff fizz == 1 : sniff buzz == 1 : roar "FizzBuzz"
+    sniff flag == 1 : sniff fizz == 1 : sniff buzz == 0 : roar "Fizz"
+    sniff flag == 1 : sniff fizz == 0 : sniff buzz == 1 : roar "Buzz"
+    sniff flag == 1 : sniff fizz == 0 : sniff buzz == 0 : roar n2
+
+    sniff flag == 1 : sniff fizz == 1 : c3 bind 0
+    sniff flag == 1 : sniff buzz == 1 : c5 bind 0
+    sniff flag == 1 : n2 bind n2 + 1
+
+    sniff n2 <= 20 : flag bind 0
+    sniff flag == 0 : soar
+}
