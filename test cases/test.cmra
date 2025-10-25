@@ -1,0 +1,42 @@
+murmur Test: prints hello then a loop 0..10
+murmur This prints hello and then prints 0-10 using sniff/dive/soar loop pattern
+
+x bind 0
+flag bind 1
+murmur jello
+
+roar "hello"
+
+sniff x <= 10 : sniff flag == 0 : dive
+flag bind 0
+
+sniff flag == 0 : roar x
+
+sniff flag == 0 : x bind x + 1
+
+flag bind 1
+
+sniff x <= 10 : sniff flag == 1 : soar
+
+
+roar ""
+roar "part 2"
+roar ""
+a bind 3
+flag bind 0
+sniff a < 5 : 
+{
+    roar a + 5
+    y bind 1
+    sniff y < 10 : 
+    {
+        sniff flag == 1 : dive
+        sniff y < 10 : flag bind 1
+        sniff flag == 1 : roar y
+        sniff flag == 1 : y bind y + 1
+        sniff y < 10 : flag bind 0
+        sniff flag == 0 : soar
+    }
+    roar 20
+
+}
