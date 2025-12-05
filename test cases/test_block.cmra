@@ -1,0 +1,8 @@
+murmur Test: block-style sniff with braces 
+murmur Should print inside then after
+
+sniff 1 == 1 :
+{
+  roar "inside"
+}
+roar "after"

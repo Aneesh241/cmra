@@ -1,0 +1,7 @@
+bind = "assignment / = "
+roar = "print"
+soar = "making the code go in up direction"
+dive = "making the code go in down direction"
+murmur = "Commenting"
+
+sniff = "check"
