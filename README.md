@@ -5,8 +5,8 @@
 **CMRA** (Chimera) is an esoteric programming language that explores reversible execution and direction control through an expressive, dragon-inspired syntax. Like a chimera commanding the elements, CMRA lets you control program flow with fiery commands that can soar upwards or dive downwards through your code.
 
 🔥 **GitHub Repository:** [https://github.com/Aneesh241/cmra](https://github.com/Aneesh241/cmra)  
-🌐 **Live Playground:** [https://aneesh241.github.io/cmra/playground.html](https://aneesh241.github.io/cmra/playground.html)  
-📚 **Documentation:** [https://aneesh241.github.io/cmra/](https://aneesh241.github.io/cmra/)
+🌐 **Live Playground:** [https://cmra-esolang.vercel.app/playground.html](https://cmra-esolang.vercel.app/playground.html)  
+📚 **Documentation:** [https://cmra-esolang.vercel.app/index.html](https://cmra-esolang.vercel.app/index.html)
 
 ---
 
@@ -24,7 +24,7 @@ to improve the interpreter, feel free to reach out on
 
 ## ✨ Try it Online!
 
-**🔥 [Launch the Interactive Playground](https://aneesh241.github.io/cmra/playground.html)**
+**🔥 [Launch the Interactive Playground](https://cmra-esolang.vercel.app/index.html)**
 
 Write and run CMRA code directly in your browser! Features:
 - 🐲 Toggle between Fire Dragon and Shadow Dragon interpreters
@@ -246,7 +246,7 @@ python .\cmra.py .\projects\fizzbuzz.cmra
 python .\cmra_simplified.py .\test.rev
 ```
 
-**Or try everything online at:** [https://aneesh241.github.io/cmra/playground.html](https://aneesh241.github.io/cmra/playground.html)
+**Or try everything online at:** [https://cmra-esolang.vercel.app/index.html](https://cmra-esolang.vercel.app/index.html)
 
 ---
 
