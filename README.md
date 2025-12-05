@@ -4,7 +4,9 @@
 
 **CMRA** (Chimera) is an esoteric programming language that explores reversible execution and direction control through an expressive, dragon-inspired syntax. Like a chimera commanding the elements, CMRA lets you control program flow with fiery commands that can soar upwards or dive downwards through your code.
 
-🔥 **GitHub Repository:** [https://github.com/Aneesh241/cmra](https://github.com/Aneesh241/cmra)
+🔥 **GitHub Repository:** [https://github.com/Aneesh241/cmra](https://github.com/Aneesh241/cmra)  
+🌐 **Live Playground:** [https://aneesh241.github.io/cmra/playground.html](https://aneesh241.github.io/cmra/playground.html)  
+📚 **Documentation:** [https://aneesh241.github.io/cmra/](https://aneesh241.github.io/cmra/)
 
 ---
 
@@ -12,13 +14,26 @@
 
 CMRA began as a workshop project I attended by
 [Tushar Sadhwani](https://github.com/tusharsadhwani) during a college multifest. The
-prototype we built is in `prototype.py`. For a non‑aliased baseline, see Tushar’s
+prototype we built is in `prototype.py`. For a non‑aliased baseline, see Tushar's
 [esolangs](https://github.com/tusharsadhwani/esolangs) repository. You can also read his
 blog at [tush.ar](https://tush.ar).
 
 This is a tiny side project made for fun and learning. If you build something cool or want
 to improve the interpreter, feel free to reach out on
 [GitHub (@Aneesh241)](https://github.com/Aneesh241) or Discord `gamingchimera`.
+
+## ✨ Try it Online!
+
+**🔥 [Launch the Interactive Playground](https://aneesh241.github.io/cmra/playground.html)**
+
+Write and run CMRA code directly in your browser! Features:
+- 🐲 Toggle between Fire Dragon and Shadow Dragon interpreters
+- 📁 Load example test cases and projects
+- 💾 Upload your own `.cmra` files
+- ⚡ Instant execution powered by Pyodide (Python in WebAssembly)
+- 🎨 Syntax highlighting with line numbers
+
+No installation required — just code and go!
 
 ## 🔱 The Twin Dragons
 
@@ -177,13 +192,23 @@ sniff cond :
 
 ### CMRA Test Cases (Fire Dragon)
 
-All tests live in `test cases/`:
+All tests live in `test cases cmra/`:
 
 - `test.cmra` — Hello world + loop 0→10 using `sniff`/`dive`/`soar`
 - `test_strings.cmra` — String literals and concatenation
 - `test_arith.cmra` — Arithmetic precedence (*/ before +−). Expected: `7`, `9`
 - `test_cond.cmra` — Inline conditions. Expected: `ok`, then `3`
 - `test_block.cmra` — Block-style `sniff`. Expected: `inside`, then `after`
+
+### Shadow Dragon Test Cases
+
+All tests live in `test cases cmra_simplified/`:
+
+- `test.cmrasim` — Basic loops and nested blocks using `check`/`reverse`
+- `test_strings.cmrasim` — String literals and concatenation
+- `test_arith.cmrasim` — Arithmetic precedence. Expected: `7`, `9`
+- `test_cond.cmrasim` — Inline conditions. Expected: `ok`, then `3`
+- `test_block.cmrasim` — Block-style `check`. Expected: `inside`, then `after`
 
 ### 🔥 Epic Dragon Projects
 
@@ -197,12 +222,16 @@ Witness the power of CMRA in action:
 ### 🔥 Run the Dragons
 
 ```powershell
-# Test cases
-python .\cmra.py ".\test cases\test_block.cmra"
-python .\cmra.py ".\test cases\test_strings.cmra"
-python .\cmra.py ".\test cases\test_arith.cmra"
+# Fire Dragon test cases
+python .\cmra.py ".\test cases cmra\test_block.cmra"
+python .\cmra.py ".\test cases cmra\test_strings.cmra"
+python .\cmra.py ".\test cases cmra\test_arith.cmra"
 
-# Epic projects
+# Shadow Dragon test cases
+python .\cmra_simplified.py ".\test cases cmra_simplified\test_block.cmrasim"
+python .\cmra_simplified.py ".\test cases cmra_simplified\test_strings.cmrasim"
+
+# Epic projects (Fire Dragon only)
 python .\cmra.py .\projects\story_adventure.cmra
 python .\cmra.py .\projects\calculator.cmra
 python .\cmra.py .\projects\countdown.cmra
@@ -217,6 +246,8 @@ python .\cmra.py .\projects\fizzbuzz.cmra
 python .\cmra_simplified.py .\test.rev
 ```
 
+**Or try everything online at:** [https://aneesh241.github.io/cmra/playground.html](https://aneesh241.github.io/cmra/playground.html)
+
 ---
 
 ## 📦 Dragon's Hoard (File Inventory)
@@ -225,9 +256,12 @@ python .\cmra_simplified.py .\test.rev
 - **`cmra_simplified.py`** — Shadow Dragon interpreter (minimal: `check`, `print`, `reverse`, braces)
 - **`prototype.py`** — Ancient Wyrm (compact baseline with inline `sniff` only)
 - **`keybind.txt`** — Sacred scroll mapping Fire ↔ Shadow dragon tongues
-- **`index.html`** + **`styles.css`** — Web grimoire (interactive documentation)
+- **`index.html`** — Interactive documentation site with dragon-themed design
+- **`playground.html`** — Browser-based code playground with Pyodide integration
+- **`styles.css`** — Dragon fire theme styling
 - **`projects/`** — Showcase programs (calculator, countdown, fizzbuzz, story_adventure)
-- **`test cases/`** — Focused examples and regression tests
+- **`test cases cmra/`** — Fire Dragon test cases (.cmra files)
+- **`test cases cmra_simplified/`** — Shadow Dragon test cases (.cmrasim files)
 
 ---
 
