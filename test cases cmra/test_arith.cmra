@@ -1,0 +1,7 @@
+murmur Test: arithmetic without parentheses, precedence */ over +- 
+murmur Expect: 7 then 9
+
+a bind 1 + 2 * 3
+b bind 1 + 2 + 3 * 2
+roar a
+roar b

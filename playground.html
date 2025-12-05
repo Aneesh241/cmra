@@ -1,0 +1,284 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>CMRA Playground — Dragon's Code Arena</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext x='10' y='80' font-size='80'%3E🐉%3C/text%3E%3C/svg%3E" />
+  <meta name="description" content="Interactive CMRA playground — write and run dragon code in your browser!" />
+</head>
+<body>
+  <header>
+    <h1>🐉 CMRA Playground</h1>
+    <p class="tagline">Write and run dragon code directly in your browser!</p>
+    <p class="github-link">
+      <a href="index.html">← Back to Docs</a>
+      <a href="https://github.com/Aneesh241/cmra" target="_blank" rel="noopener">View on GitHub</a>
+    </p>
+  </header>
+
+  <main>
+    <section id="playground">
+      <h2>🔥 Dragon's Code Arena</h2>
+      <p>Toggle between Fire Dragon and Shadow Dragon interpreters. Load examples or upload your own files!</p>
+      
+      <div class="playground-controls">
+        <div class="control-row">
+          <label for="interpreter-toggle">Interpreter:</label>
+          <select id="interpreter-toggle">
+            <option value="fire">🐲 Fire Dragon (cmra.py)</option>
+            <option value="shadow">🌑 Shadow Dragon (cmra_simplified.py)</option>
+          </select>
+          
+          <label for="file-dropdown">Load Example:</label>
+          <select id="file-dropdown">
+            <option value="">-- Select a file --</option>
+            <optgroup label="Test Cases" id="test-cases-group">
+              <option value="test cases cmra/test.cmra">test.cmra</option>
+              <option value="test cases cmra/test_strings.cmra">test_strings.cmra</option>
+              <option value="test cases cmra/test_arith.cmra">test_arith.cmra</option>
+              <option value="test cases cmra/test_cond.cmra">test_cond.cmra</option>
+              <option value="test cases cmra/test_block.cmra">test_block.cmra</option>
+            </optgroup>
+            <optgroup label="Projects" id="projects-group">
+              <option value="projects/calculator.cmra">calculator.cmra</option>
+              <option value="projects/countdown.cmra">countdown.cmra</option>
+              <option value="projects/fizzbuzz.cmra">fizzbuzz.cmra</option>
+              <option value="projects/story_adventure.cmra">story_adventure.cmra</option>
+            </optgroup>
+          </select>
+          
+          <label for="file-upload" class="file-upload-label">📁 Upload File</label>
+          <input type="file" id="file-upload" accept=".cmra,.cmrasim,.rev" style="display: none;" />
+        </div>
+        
+        <div class="control-row">
+          <button id="run-btn" class="action-btn run-btn">▶️ Run Code</button>
+          <button id="clear-output-btn" class="action-btn">🗑️ Clear Output</button>
+          <button id="clear-editor-btn" class="action-btn">📝 Clear Editor</button>
+        </div>
+      </div>
+      
+      <div id="editor-container" style="height: 500px; border: 2px solid #ff6b35; margin: 20px 0;"></div>
+      
+      <div class="output-section">
+        <h3>Output</h3>
+        <pre id="output-pane">Ready to run your dragon code! 🐉</pre>
+      </div>
+      
+      <div id="loading-status" class="loading-status">Initializing Pyodide... 🔄</div>
+    </section>
+  </main>
+
+  <footer>
+    <p>🐉 <strong>May your code burn bright and your loops reverse true!</strong> 🔥</p>
+    <p><a href="https://github.com/Aneesh241/cmra" target="_blank" rel="noopener">GitHub: Aneesh241/cmra</a></p>
+  </footer>
+
+  <!-- CodeMirror Editor (lighter, no AMD conflicts) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/codemirror.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/theme/monokai.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/codemirror.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/python/python.min.js"></script>
+  
+  <!-- Pyodide -->
+  <script src="https://cdn.jsdelivr.net/pyodide/v0.24.1/full/pyodide.js"></script>
+  
+  <script>
+    let editor;
+    let pyodide;
+    let interpretersLoaded = false;
+
+    // Initialize CodeMirror Editor
+    document.addEventListener('DOMContentLoaded', function() {
+      editor = CodeMirror(document.getElementById('editor-container'), {
+        value: `murmur Welcome to CMRA Fire Dragon!\nmurmur Try the expressive syntax\n\nx bind 5\nroar "Hello from the dragon's lair!"\nroar x * 2\n\nsniff x > 3 : {\n  roar "x is greater than 3"\n}`,
+        mode: 'python',
+        theme: 'monokai',
+        lineNumbers: true,
+        indentUnit: 2,
+        tabSize: 2,
+        lineWrapping: true
+      });
+      
+      // Add interpreter toggle listener to update file dropdown
+      document.getElementById('interpreter-toggle').addEventListener('change', updateFileDropdown);
+      
+      // Initialize Pyodide after editor is ready
+      initPyodide();
+    });
+
+    // Update file dropdown based on selected interpreter
+    function updateFileDropdown() {
+      const interpreter = document.getElementById('interpreter-toggle').value;
+      const testCasesGroup = document.getElementById('test-cases-group');
+      const projectsGroup = document.getElementById('projects-group');
+      
+      if (interpreter === 'fire') {
+        // Fire Dragon - show CMRA test cases and projects
+        testCasesGroup.innerHTML = `
+          <option value="test cases cmra/test.cmra">test.cmra</option>
+          <option value="test cases cmra/test_strings.cmra">test_strings.cmra</option>
+          <option value="test cases cmra/test_arith.cmra">test_arith.cmra</option>
+          <option value="test cases cmra/test_cond.cmra">test_cond.cmra</option>
+          <option value="test cases cmra/test_block.cmra">test_block.cmra</option>
+        `;
+        projectsGroup.style.display = '';
+        
+        // Update default editor content
+        editor.setValue(`murmur Welcome to CMRA Fire Dragon!\nmurmur Try the expressive syntax\n\nx bind 5\nroar "Hello from the dragon's lair!"\nroar x * 2\n\nsniff x > 3 : {\n  roar "x is greater than 3"\n}`);
+      } else {
+        // Shadow Dragon - show simplified test cases only, hide projects
+        testCasesGroup.innerHTML = `
+          <option value="test cases cmra_simplified/test.cmrasim">test.cmrasim</option>
+          <option value="test cases cmra_simplified/test_strings.cmrasim">test_strings.cmrasim</option>
+          <option value="test cases cmra_simplified/test_arith.cmrasim">test_arith.cmrasim</option>
+          <option value="test cases cmra_simplified/test_cond.cmrasim">test_cond.cmrasim</option>
+          <option value="test cases cmra_simplified/test_block.cmrasim">test_block.cmrasim</option>
+        `;
+        projectsGroup.style.display = 'none';
+        
+        // Update default editor content
+        editor.setValue(`; Welcome to CMRA Shadow Dragon!\n; Try the minimal syntax\n\nx = 5\nprint "Hello from the dragon's lair!"\nprint x * 2\n\ncheck x > 3 : {\n  print "x is greater than 3"\n}`);
+      }
+      
+      // Reset dropdown selection
+      document.getElementById('file-dropdown').value = '';
+    }
+
+    // Initialize Pyodide
+    async function initPyodide() {
+      const statusDiv = document.getElementById('loading-status');
+      try {
+        statusDiv.textContent = 'Loading Pyodide... 🔄';
+        pyodide = await loadPyodide();
+        
+        statusDiv.textContent = 'Loading interpreters... 🔄';
+        
+        // Fetch interpreter files
+        const cmraResponse = await fetch('cmra.py');
+        const cmraCode = await cmraResponse.text();
+        
+        const simplifiedResponse = await fetch('cmra_simplified.py');
+        const simplifiedCode = await simplifiedResponse.text();
+        
+        // Write to Pyodide filesystem
+        pyodide.FS.writeFile('cmra.py', cmraCode);
+        pyodide.FS.writeFile('cmra_simplified.py', simplifiedCode);
+        
+        interpretersLoaded = true;
+        statusDiv.textContent = 'Ready! 🐉';
+        statusDiv.style.display = 'none';
+      } catch (error) {
+        statusDiv.textContent = `Error loading Pyodide: ${error.message}`;
+        statusDiv.style.color = '#ff4444';
+      }
+    }
+
+    // Run code
+    async function runCode() {
+      if (!interpretersLoaded) {
+        alert('Pyodide is still loading. Please wait...');
+        return;
+      }
+
+      const code = editor.getValue();
+      const interpreter = document.getElementById('interpreter-toggle').value;
+      const outputPane = document.getElementById('output-pane');
+      
+      try {
+        outputPane.textContent = 'Running... 🔥\n';
+        
+        // Write user code to temp file
+        pyodide.FS.writeFile('user_code.cmra', code);
+        
+        // Capture stdout and run the interpreter
+        const scriptFile = interpreter === 'fire' ? 'cmra' : 'cmra_simplified';
+        
+        const runScript = `
+import sys
+from io import StringIO
+
+# Capture stdout
+old_stdout = sys.stdout
+sys.stdout = StringIO()
+
+try:
+    # Set sys.argv to include the filename
+    sys.argv = ['${scriptFile}.py', 'user_code.cmra']
+    
+    # Import and run the interpreter
+    if '${scriptFile}' == 'cmra':
+        # Reset module if already imported
+        if 'cmra' in sys.modules:
+            del sys.modules['cmra']
+        import cmra
+    else:
+        # Reset module if already imported
+        if 'cmra_simplified' in sys.modules:
+            del sys.modules['cmra_simplified']
+        import cmra_simplified
+    
+    output = sys.stdout.getvalue()
+except Exception as e:
+    import traceback
+    output = f"Error: {e}\\n\\nTraceback:\\n{traceback.format_exc()}"
+finally:
+    sys.stdout = old_stdout
+
+output
+`;
+        
+        const result = await pyodide.runPythonAsync(runScript);
+        outputPane.textContent = result || '(No output)';
+      } catch (error) {
+        outputPane.textContent = `Error: ${error.message}`;
+        outputPane.style.color = '#ff4444';
+      }
+    }
+
+    // Load example file
+    async function loadFile() {
+      const dropdown = document.getElementById('file-dropdown');
+      const filePath = dropdown.value;
+      
+      if (!filePath) return;
+      
+      try {
+        const response = await fetch(filePath);
+        const content = await response.text();
+        editor.setValue(content);
+      } catch (error) {
+        alert(`Error loading file: ${error.message}`);
+      }
+    }
+
+    // Upload file
+    function handleFileUpload(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+      
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        editor.setValue(e.target.result);
+      };
+      reader.readAsText(file);
+    }
+
+    // Event listeners
+    document.getElementById('run-btn').addEventListener('click', runCode);
+    document.getElementById('clear-output-btn').addEventListener('click', () => {
+      document.getElementById('output-pane').textContent = '';
+    });
+    document.getElementById('clear-editor-btn').addEventListener('click', () => {
+      editor.setValue('');
+    });
+    document.getElementById('file-dropdown').addEventListener('change', loadFile);
+    document.getElementById('file-upload').addEventListener('change', handleFileUpload);
+    document.querySelector('.file-upload-label').addEventListener('click', () => {
+      document.getElementById('file-upload').click();
+    });
+  </script>
+</body>
+</html>

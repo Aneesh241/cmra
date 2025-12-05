@@ -1,0 +1,8 @@
+; Test: block-style check with braces 
+; Should print inside then after
+
+check 1 == 1 :
+{
+  print "inside"
+}
+print "after"

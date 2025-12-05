@@ -1,0 +1,8 @@
+; Test: string literals and concatenation 
+; Should print hello, Hello, World and x is 2
+
+print "hello"
+name = "World"
+print "Hello, " + name
+x = 2
+print "x is " + x

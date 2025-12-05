@@ -1,0 +1,8 @@
+murmur Test: string literals and concatenation 
+murmur Should print hello, Hello, World and x is 2
+
+roar "hello"
+name bind "World"
+roar "Hello, " + name
+x bind 2
+roar "x is " + x

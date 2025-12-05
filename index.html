@@ -1,0 +1,282 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>CMRA (Chimera) — an esoteric reversible language</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext x='10' y='80' font-size='80'%3E🐉%3C/text%3E%3C/svg%3E" />
+  <meta name="description" content="CMRA (Chimera) — a tiny esoteric language exploring reversible execution with dragon-themed syntax." />
+</head>
+<body>
+  <header>
+    <h1>🐉 CMRA (Chimera)</h1>
+    <p class="tagline">An esoteric language where code breathes fire and the control flow can soar up or dive down.</p>
+    <div class="header-actions">
+      <p class="github-link">
+        <a href="https://github.com/Aneesh241/cmra" target="_blank" rel="noopener">View on GitHub</a>
+      </p>
+      <a href="playground.html" class="try-live-btn-header">🔥 Try it Live</a>
+    </div>
+    <nav>
+      <a href="#intro">Intro</a>
+      <a href="#esolang">Why an esolang?</a>
+      <a href="#quickstart">Quick start</a>
+      <a href="#languages">Languages</a>
+      <a href="#execution">Execution</a>
+      <a href="#loops">Loops</a>
+      <a href="#mapping">Keyword map</a>
+      <a href="#examples">Examples</a>
+      <a href="#tests">Tests</a>
+      <a href="#tips">Tips</a>
+      <a href="#files">Files</a>
+      <a href="#extending">Extending</a>
+    </nav>
+  </header>
+
+  <main>
+    <section id="intro" class="hero">
+      <h2>🔥 Welcome to the Dragon's Lair</h2>
+      <p><strong>CMRA</strong> is a tiny <em>esoteric programming language (esolang)</em> that explores <strong>reversible execution</strong> through a dragon-themed syntax. Programs can change their traversal direction at runtime: ascend with <code>soar</code> or descend with <code>dive</code>.</p>
+      <p>Two interpreters stand guard: the <strong>Fire Dragon</strong> (<code>cmra.py</code>) with expressive aliases, and the <strong>Shadow Dragon</strong> (<code>cmra_simplified.py</code>) with minimal commands.</p>
+      <h3>Origin</h3>
+      <p>
+        CMRA began as a workshop project I attended by
+        <a href="https://github.com/tusharsadhwani" target="_blank" rel="noopener">Tushar Sadhwani</a>
+        during a college multifest. The prototype we built lives in
+        <code>prototype.py</code>, and a non‑aliased baseline can be found in Tushar’s
+        <a href="https://github.com/tusharsadhwani/esolangs" target="_blank" rel="noopener">esolangs</a>
+        repository. You can also read his blog at
+        <a href="https://tush.ar" target="_blank" rel="noopener">tush.ar</a>.
+      </p>
+      <p>
+        This is a tiny side project made for fun and learning. If you build something cool
+        or want to improve the interpreter, reach out on
+        <a href="https://github.com/Aneesh241" target="_blank" rel="noopener">GitHub (@Aneesh241)</a>
+        or Discord <code>gamingchimera</code>.
+      </p>
+    </section>
+
+    <section id="esolang">
+      <h2>🧪 Why an esolang?</h2>
+      <ul>
+        <li><strong>Experimental control flow:</strong> A single global <code>DIRECTION</code> walks the program forwards or backwards.</li>
+        <li><strong>Concept-first design:</strong> Meant for learning, puzzling, and play — not for production.</li>
+        <li><strong>Minimal surface area:</strong> Just variables, expressions, prints, and directional checks/blocks.</li>
+        <li><strong>Readable flair:</strong> Dragon-flavored aliases make intent obvious and fun.</li>
+      </ul>
+    </section>
+
+    <section id="quickstart">
+      <h2>⚡ Quick start</h2>
+      <p>Windows PowerShell examples:</p>
+      <pre><code># CMRA (alias) programs
+python .\cmra.py ".\test cases\test.cmra"
+
+# Simplified (check/print/reverse) program
+python .\cmra_simplified.py .\test.rev
+
+# You can also use `py` instead of `python`
+py cmra.py "test cases\test_strings.cmra"
+py cmra_simplified.py test.rev</code></pre>
+    </section>
+
+    <section id="languages">
+      <h2>🐲 Languages</h2>
+
+      <article class="dragon-card">
+        <h3>Shadow Dragon (<code>cmra_simplified.py</code>)</h3>
+        <p>The minimalist path — direct and powerful:</p>
+        <ul>
+          <li><strong>Variables:</strong> <code>x = 3</code></li>
+          <li><strong>Print:</strong> <code>print x + 5</code> (numbers or quoted strings)</li>
+          <li><strong>Conditionals:</strong>
+            <ul>
+              <li>Inline: <code>check x &lt; 5 : print x</code></li>
+              <li>Block: <code>check x &lt; 5 : { ... }</code></li>
+            </ul>
+          </li>
+          <li><strong>Direction:</strong> <code>reverse</code> toggles global direction</li>
+          <li><strong>Nested inline checks:</strong> <code>check a &lt; 10 : check flag == 1 : reverse</code></li>
+        </ul>
+      </article>
+
+      <article class="dragon-card">
+        <h3>Fire Dragon (<code>cmra.py</code>)</h3>
+        <p>The expressive path — commands that speak of power:</p>
+        <ul>
+          <li><code>bind</code> → assignment (e.g., <code>x bind 3</code>)</li>
+          <li><code>roar</code> → print (e.g., <code>roar x + 1</code> or <code>roar "hello"</code>)</li>
+          <li><code>sniff</code> → conditional (inline or block)</li>
+          <li><code>dive</code> → set direction downwards (forward)</li>
+          <li><code>soar</code> → set direction upwards (reverse)</li>
+          <li><code>murmur</code> → comment/no-op for the rest of the line</li>
+        </ul>
+        <p class="note"><strong>Equivalence:</strong> <code>soar</code> ≈ simplified <code>reverse</code> (set reverse). <code>dive</code> sets forward.</p>
+      </article>
+    </section>
+
+    <section id="execution">
+      <h2>🧭 Execution model</h2>
+      <ul>
+        <li>Programs step line-by-line with a global <code>DIRECTION</code>: <code>1</code> = forwards, <code>-1</code> = reverse.</li>
+        <li>CMRA: <code>dive</code> sets forwards; <code>soar</code> sets reverse. Simplified: <code>reverse</code> toggles.</li>
+        <li>Block <code>sniff/check</code> returns into the block (first/last line) so a reverse inside takes effect immediately.</li>
+        <li>Numbers are floats; strings use single/double quotes. <code>+</code> concatenates if either side is a string.</li>
+        <li>Precedence: <code>*</code>, <code>/</code> &gt; <code>+</code>, <code>-</code> &gt; comparisons.</li>
+      </ul>
+
+      <h3>Block entry ritual</h3>
+      <ul>
+        <li>True + forward → jump to the first line inside the block</li>
+        <li>True + reverse → jump to the last line inside the block</li>
+        <li>False → skip past the entire block</li>
+      </ul>
+    </section>
+
+    <section id="loops">
+      <h2>🌀 Reusable loop patterns</h2>
+      <h3>Flagged loop (inline)</h3>
+      <pre><code>flag bind 1
+sniff cond : sniff flag == 0 : dive
+flag bind 0
+sniff flag == 0 : ;;; body
+sniff flag == 0 : ;;; step
+flag bind 1
+sniff cond : sniff flag == 1 : soar</code></pre>
+
+      <h3>Block loop (brace style)</h3>
+      <pre><code>flag bind 0
+sniff cond :
+{
+  sniff flag == 1 : dive
+  sniff cond : flag bind 1
+  sniff flag == 1 : ;;; body
+  sniff flag == 1 : ;;; step
+  sniff cond : flag bind 0
+  sniff flag == 0 : soar
+}</code></pre>
+      <p>Tip: Guard body/step with <code>flag</code> so reverse traversal doesn’t repeat the body. Apply the same pattern to nested loops.</p>
+    </section>
+
+    <section id="mapping">
+      <h2>🗺️ Keyword mapping</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Fire Dragon (CMRA)</th>
+            <th>Shadow Dragon (Simplified)</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td><code>bind</code></td><td><code>=</code></td><td>Assignment</td></tr>
+          <tr><td><code>roar</code></td><td><code>print</code></td><td>Print expression</td></tr>
+          <tr><td><code>sniff</code></td><td><code>check</code></td><td>Conditional</td></tr>
+          <tr><td><code>dive</code></td><td><em>—</em></td><td>Set forward direction</td></tr>
+          <tr><td><code>soar</code></td><td><code>reverse</code></td><td>Set reverse direction</td></tr>
+          <tr><td><code>murmur</code></td><td><em>—</em></td><td>Comment/no-op</td></tr>
+        </tbody>
+      </table>
+      <p class="note"><small><strong>Note:</strong> The simplified language has only <code>reverse</code>. CMRA splits direction control into <code>dive</code> (forward) and <code>soar</code> (reverse).</small></p>
+    </section>
+
+    <section id="examples">
+      <h2>🧩 Examples</h2>
+      <h3>Inline check (CMRA)</h3>
+      <pre><code>sniff x &lt;= 10 : roar x</code></pre>
+      <h3>Block check (CMRA)</h3>
+      <pre><code>sniff x &lt; 5 : {
+  roar "inside"
+}</code></pre>
+      <h3>Simplified reverse with nested checks</h3>
+      <pre><code>check x &lt; 5 : {
+  print x + 5
+  check flag == 1 : reverse
+}</code></pre>
+    </section>
+
+    <section id="tests">
+      <h2>🎮 Tests & projects</h2>
+      <p>All tests live in <code>test cases/</code>:</p>
+      <ul>
+        <li><code>test.cmra</code> — Hello + loop using <code>sniff</code>/<code>dive</code>/<code>soar</code></li>
+        <li><code>test_strings.cmra</code> — String literals and concatenation</li>
+        <li><code>test_arith.cmra</code> — Arithmetic precedence (expected: <code>7</code>, <code>9</code>)</li>
+        <li><code>test_cond.cmra</code> — Inline conditions (expected: <code>ok</code>, then <code>3</code>)</li>
+        <li><code>test_block.cmra</code> — Block-style <code>sniff</code> (expected: <em>inside</em>, then <em>after</em>)</li>
+      </ul>
+      <h3>Cool projects</h3>
+      <ul>
+        <li><code>projects/story_adventure.cmra</code> — Interactive text adventure</li>
+        <li><code>projects/calculator.cmra</code> — Factorial, series sum, power (both loop styles)</li>
+        <li><code>projects/countdown.cmra</code> — Countdown and reversible counters</li>
+        <li><code>projects/fizzbuzz.cmra</code> — FizzBuzz with counter-based modulo</li>
+        <li><code>projects/bouncing_ball.cmra</code> — Frame-by-frame bouncing ball effect (no terminal control required)</li>
+      </ul>
+
+      <h3>Run them</h3>
+      <pre><code># Test cases
+python .\cmra.py ".\test cases\test_block.cmra"
+python .\cmra.py ".\test cases\test_strings.cmra"
+
+# Projects
+python .\cmra.py .\projects\calculator.cmra
+python .\cmra.py .\projects\countdown.cmra
+python .\cmra.py .\projects\fizzbuzz.cmra
+python .\cmra.py .\projects\story_adventure.cmra
+
+# Simplified sample program
+python .\cmra_simplified.py .\test.rev</code></pre>
+    </section>
+
+    <section id="tips">
+      <h2>⚠️ Dragon's wisdom (pitfalls & tips)</h2>
+      <div class="wisdom-card">
+        <h3>🔥 Beware the reverse flame</h3>
+        <p>Direction reversals <strong>re-traverse lines</strong>. Without a guarding <code>flag</code>, assignments and prints will repeat. Use the loop patterns above.</p>
+      </div>
+      <div class="wisdom-card">
+        <h3>🔥 String growth inferno</h3>
+        <p>Concatenating inside unguarded loops = exponential string growth. Build strings once per forward pass, guard with flags.</p>
+      </div>
+      <div class="wisdom-card">
+        <h3>🔥 Numbers are floats</h3>
+        <p>All numbers parse as floats (<code>2</code> → <code>2.0</code>). Want integers? Adapt tokenization to parse ints before floats.</p>
+      </div>
+      <div class="wisdom-card">
+        <h3>🔥 Nested dragons</h3>
+        <p>Nested loops work, but <strong>every inner body needs flag guards</strong>. Without guards, inner loops re-execute on reverse passes.</p>
+      </div>
+    </section>
+
+    <section id="files">
+      <h2>📦 File inventory</h2>
+      <ul>
+        <li><code>cmra.py</code> — Fire Dragon interpreter (alias keywords, inline + block <code>sniff</code>)</li>
+        <li><code>cmra_simplified.py</code> — Shadow Dragon interpreter (<code>check</code>, <code>print</code>, <code>reverse</code>, braces)</li>
+        <li><code>prototype.py</code> — Compact baseline with inline <code>sniff</code></li>
+        <li><code>keybind.txt</code> — Keyword mapping cheatsheet</li>
+        <li><code>index.html</code> + <code>styles.css</code> — This site</li>
+        <li><code>projects/</code> — Showcase programs</li>
+        <li><code>test cases/</code> — Examples and regression tests</li>
+      </ul>
+    </section>
+
+    <section id="extending">
+      <h2>🛠️ Extending the language</h2>
+      <p>Want to add new commands? Follow this pattern:</p>
+      <ol>
+        <li><strong>Top-level dispatch</strong> — Add your command alongside <code>roar</code>/<code>print</code>.</li>
+        <li><strong>Inline action executor</strong> — Enable it in nested <code>sniff</code>/<code>check</code> statements.</li>
+      </ol>
+      <p>Study how <code>roar</code>, <code>bind</code>, <code>dive</code>, and <code>soar</code> are implemented in both interpreters.</p>
+    </section>
+  </main>
+
+  <footer>
+    <p>🐉 <strong>May your code burn bright and your loops reverse true!</strong> 🔥</p>
+    <p><a href="https://github.com/Aneesh241/cmra" target="_blank" rel="noopener">GitHub: Aneesh241/cmra</a></p>
+  </footer>
+</body>
+</html>

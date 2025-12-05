@@ -1,0 +1,108 @@
+murmur === Countdown and Countup Demo ===
+murmur Shows CMRA's reversible execution in action!
+
+roar "=== Rocket Launch Countdown ==="
+roar ""
+
+count bind 10
+
+murmur Countdown from 10 to 0
+flag bind 1
+sniff count >= 0 : sniff flag == 0 : dive
+flag bind 0
+sniff flag == 0 : roar "T-minus " + count + " seconds..."
+sniff flag == 0 : count bind count - 1
+flag bind 1
+sniff count >= 0 : sniff flag == 1 : soar
+
+roar "LIFTOFF!"
+roar ""
+roar "=== Mission Status Updates ==="
+
+status bind 1
+flag bind 1
+sniff status <= 5 : sniff flag == 0 : dive
+flag bind 0
+sniff flag == 0 : roar "Status Update #" + status
+sniff flag == 0 : status bind status + 1
+flag bind 1
+sniff status <= 5 : sniff flag == 1 : soar
+
+roar ""
+roar "=== Reversible Counter Demo ==="
+roar ""
+
+murmur Count up from 1 to 5
+x bind 1
+flag bind 1
+sniff x <= 5 : sniff flag == 0 : dive
+flag bind 0
+sniff flag == 0 : roar "Counting UP: " + x
+sniff flag == 0 : x bind x + 1
+flag bind 1
+sniff x <= 5 : sniff flag == 1 : soar
+
+roar "Now reversing..."
+
+murmur Count down using soar to reverse direction
+x bind x - 1
+flag bind 1
+sniff x >= 1 : sniff flag == 0 : dive
+flag bind 0
+sniff flag == 0 : roar "Counting DOWN: " + x
+sniff flag == 0 : x bind x - 1
+flag bind 1
+sniff x >= 1 : sniff flag == 1 : soar
+
+roar ""
+roar "=== Temperature Monitor ==="
+roar ""
+
+murmur Simulate temperature readings
+temp bind 20
+reading bind 1
+
+flag bind 1
+sniff reading <= 7 : sniff flag == 0 : dive
+flag bind 0
+sniff flag == 0 : roar "Reading #" + reading + ": " + temp + " degrees"
+sniff flag == 0 : temp bind temp + 3
+sniff flag == 0 : reading bind reading + 1
+flag bind 1
+sniff reading <= 7 : sniff flag == 1 : soar
+
+roar ""
+roar "Maximum temperature reached: " + temp + " degrees"
+roar ""
+roar "=== Demo Complete! ==="
+
+roar ""
+roar "=== Block-Style Loops Demo ==="
+roar ""
+
+murmur Countdown (Block Loop)
+count2 bind 5
+flag bind 0
+sniff count2 >= 0 :
+{
+	sniff flag == 1 : dive
+	sniff count2 >= 0 : flag bind 1
+	sniff flag == 1 : roar "[BLOCK] T-minus " + count2
+	sniff flag == 1 : count2 bind count2 - 1
+	sniff count2 >= 0 : flag bind 0
+	sniff flag == 0 : soar
+}
+roar "[BLOCK] LIFTOFF!"
+roar ""
+murmur Status updates (Block Loop)
+status2 bind 1
+flag bind 0
+sniff status2 <= 3 :
+{
+	sniff flag == 1 : dive
+	sniff status2 <= 3 : flag bind 1
+	sniff flag == 1 : roar "[BLOCK] Status #" + status2
+	sniff flag == 1 : status2 bind status2 + 1
+	sniff status2 <= 3 : flag bind 0
+	sniff flag == 0 : soar
+}

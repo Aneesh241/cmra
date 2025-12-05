@@ -1,0 +1,134 @@
+murmur === Interactive Story Generator ===
+murmur A text adventure using CMRA's unique features!
+
+roar "========================================"
+roar "   THE MYSTERIOUS FOREST ADVENTURE     "
+roar "========================================"
+roar ""
+
+murmur Chapter 1: The Beginning
+roar "Chapter 1: The Beginning"
+roar "------------------------"
+roar ""
+hero bind "Alex"
+roar hero + " wakes up in a mysterious forest..."
+health bind 100
+roar "Health: " + health
+roar ""
+
+murmur Chapter 2: First Choice
+roar "Chapter 2: The Fork in the Road"
+roar "--------------------------------"
+roar ""
+roar hero + " sees two paths ahead:"
+roar "  Path A: A dark, winding trail"
+roar "  Path B: A sunny, open path"
+roar ""
+choice bind 2
+sniff choice == 2 :
+{
+    roar "[*] " + hero + " takes Path B (the sunny path)"
+    roar ""
+}
+
+murmur Chapter 3: Discovery
+roar "Chapter 3: The Discovery"
+roar "------------------------"
+roar ""
+roar "Walking down the sunny path, " + hero + " finds:"
+gold bind 50
+roar "  [+] " + gold + " gold coins!"
+health bind health + 20
+roar "  [+] Health restored to: " + health
+roar ""
+
+murmur Chapter 4: The Challenge
+roar "Chapter 4: The Guardian Beast"
+roar "------------------------------"
+roar ""
+roar "A friendly creature appears!"
+roar "It's a magical fox who offers a riddle..."
+roar ""
+roar "[FOX] 'If you can count to 5, I'll give you a gift!'"
+roar ""
+
+murmur Counting challenge
+num bind 1
+roar "  " + num + "..."
+num bind 2
+roar "  " + num + "..."
+num bind 3
+roar "  " + num + "..."
+num bind 4
+roar "  " + num + "..."
+num bind 5
+roar "  " + num + "!"
+roar ""
+
+roar "[FOX] 'Well done!'"
+magic_item bind "Crystal Amulet"
+roar "[ITEM] Received: " + magic_item
+roar ""
+
+murmur Chapter 5: The Magic
+roar "Chapter 5: The Magic Power"
+roar "--------------------------"
+roar ""
+roar "The " + magic_item + " begins to glow!"
+roar "It shows visions of the future and past..."
+roar ""
+roar "[*] SPECIAL ABILITY UNLOCKED:"
+roar "   'Time Reversal' - powered by CMRA's soar/dive!"
+roar ""
+
+murmur Chapter 6: The Battle
+roar "Chapter 6: The Final Test"
+roar "-------------------------"
+roar ""
+enemy bind "Shadow Warrior"
+roar "A " + enemy + " appears!"
+roar ""
+roar "[!] BATTLE SEQUENCE"
+roar "-------------------"
+enemy_health bind 3
+attack_num bind 1
+
+roar "  Attack #" + attack_num + " - Hit! [BOOM]"
+enemy_health bind enemy_health - 1
+roar "  Enemy health: " + enemy_health
+
+attack_num bind 2
+roar "  Attack #" + attack_num + " - Critical Hit! [BOOM][BOOM]"
+enemy_health bind enemy_health - 1
+roar "  Enemy health: " + enemy_health
+
+attack_num bind 3
+roar "  Attack #" + attack_num + " - Final blow! [BOOM][BOOM][BOOM]"
+enemy_health bind enemy_health - 1
+roar "  Enemy health: " + enemy_health
+
+roar ""
+sniff enemy_health <= 0 :
+{
+    roar "[*] Victory! The " + enemy + " is defeated!"
+}
+
+roar ""
+
+murmur Epilogue
+roar "========================================"
+roar "            THE ENDING                  "
+roar "========================================"
+roar ""
+roar hero + "'s Final Stats:"
+roar "  [HP] Health: " + health
+roar "  [$] Gold: " + gold
+roar "  [ITEM] Magic Item: " + magic_item
+roar ""
+total_score bind health + gold
+roar "[TROPHY] Final Score: " + total_score
+roar ""
+roar "[*] THE END [*]"
+roar ""
+roar "Thanks for playing!"
+roar "This adventure was powered by CMRA"

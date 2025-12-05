@@ -1,0 +1,8 @@
+; Test: inline conditions with print and assignment 
+; Expect: ok then 3
+
+x = 2
+check x * 2 == 4 : print "ok"
+check x == 3 : print "nope"
+check x == 2 : x = x + 1
+print x

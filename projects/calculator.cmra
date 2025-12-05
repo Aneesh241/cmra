@@ -1,0 +1,155 @@
+murmur === Interactive Calculator in CMRA ===
+murmur Demonstrates CMRA's ability to perform various calculations
+
+roar "=== CMRA Calculator ==="
+roar ""
+
+murmur Addition Demo
+a bind 15
+b bind 27
+result bind a + b
+roar "Addition: " + a + " + " + b + " = " + result
+
+murmur Subtraction Demo
+a bind 50
+b bind 23
+result bind a - b
+roar "Subtraction: " + a + " - " + b + " = " + result
+
+murmur Multiplication Demo
+a bind 7
+b bind 8
+result bind a * b
+roar "Multiplication: " + a + " * " + b + " = " + result
+
+murmur Division Demo
+a bind 100
+b bind 4
+result bind a / b
+roar "Division: " + a + " / " + b + " = " + result
+
+roar ""
+roar "=== Factorial Calculator ==="
+roar ""
+
+murmur Calculate 5 factorial (5!)
+n bind 5
+factorial bind 1
+counter bind 1
+flag bind 1
+
+sniff counter <= n : sniff flag == 0 : dive
+flag bind 0
+sniff flag == 0 : factorial bind factorial * counter
+sniff flag == 0 : counter bind counter + 1
+flag bind 1
+sniff counter <= n : sniff flag == 1 : soar
+
+roar n + "! = " + factorial
+
+roar ""
+roar "=== Sum of Series ==="
+roar ""
+
+murmur Calculate sum of 1 + 2 + 3 + ... + 20
+sum bind 0
+i bind 1
+max bind 20
+flag bind 1
+
+sniff i <= max : sniff flag == 0 : dive
+flag bind 0
+sniff flag == 0 : sum bind sum + i
+sniff flag == 0 : i bind i + 1
+flag bind 1
+sniff i <= max : sniff flag == 1 : soar
+
+roar "Sum of 1 to " + max + " = " + sum
+
+roar ""
+roar "=== Power Calculation ==="
+roar ""
+
+murmur Calculate 2^10
+base bind 2
+exponent bind 10
+result bind 1
+counter bind 0
+flag bind 1
+
+sniff counter < exponent : sniff flag == 0 : dive
+flag bind 0
+sniff flag == 0 : result bind result * base
+sniff flag == 0 : counter bind counter + 1
+flag bind 1
+sniff counter < exponent : sniff flag == 1 : soar
+
+roar base + "^" + exponent + " = " + result
+
+roar ""
+roar "=== Calculator Complete! ==="
+
+roar ""
+roar "=== Factorial (Block Loop) ==="
+roar ""
+
+murmur Block-style factorial for 6!
+n2 bind 6
+factorial2 bind 1
+counter2 bind 1
+flag bind 0
+
+sniff counter2 <= n2 :
+{
+	sniff flag == 1 : dive
+	sniff counter2 <= n2 : flag bind 1
+	sniff flag == 1 : factorial2 bind factorial2 * counter2
+	sniff flag == 1 : counter2 bind counter2 + 1
+	sniff counter2 <= n2 : flag bind 0
+	sniff flag == 0 : soar
+}
+
+roar n2 + "! = " + factorial2
+
+roar ""
+roar "=== Sum of Series (Block Loop) ==="
+roar ""
+
+sum2 bind 0
+i2 bind 1
+max2 bind 10
+flag bind 0
+
+sniff i2 <= max2 :
+{
+	sniff flag == 1 : dive
+	sniff i2 <= max2 : flag bind 1
+	sniff flag == 1 : sum2 bind sum2 + i2
+	sniff flag == 1 : i2 bind i2 + 1
+	sniff i2 <= max2 : flag bind 0
+	sniff flag == 0 : soar
+}
+
+roar "Sum of 1 to " + max2 + " = " + sum2
+
+roar ""
+roar "=== Power (Block Loop) ==="
+roar ""
+
+base2 bind 3
+exponent2 bind 4
+result2 bind 1
+count2 bind 0
+flag bind 0
+
+sniff count2 < exponent2 :
+{
+	sniff flag == 1 : dive
+	sniff count2 < exponent2 : flag bind 1
+	sniff flag == 1 : result2 bind result2 * base2
+	sniff flag == 1 : count2 bind count2 + 1
+	sniff count2 < exponent2 : flag bind 0
+	sniff flag == 0 : soar
+}
+
+roar base2 + "^" + exponent2 + " = " + result2

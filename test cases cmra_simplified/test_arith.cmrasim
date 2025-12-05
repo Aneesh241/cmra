@@ -1,0 +1,7 @@
+; Test: arithmetic without parentheses, precedence */ over +- 
+; Expect: 7 then 9
+
+a = 1 + 2 * 3
+b = 1 + 2 + 3 * 2
+print a
+print b

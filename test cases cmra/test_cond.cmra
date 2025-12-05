@@ -1,0 +1,8 @@
+murmur Test: inline conditions with print and assignment 
+murmur Expect: ok then 3
+
+x bind 2
+sniff x * 2 == 4 : roar "ok"
+sniff x == 3 : roar "nope"
+sniff x == 2 : x bind x + 1
+roar x
